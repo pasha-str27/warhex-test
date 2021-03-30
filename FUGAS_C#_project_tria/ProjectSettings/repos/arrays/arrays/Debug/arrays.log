@@ -1,0 +1,17 @@
+﻿  Source.cpp
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(187,1): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(186): message : while compiling class template member function 'std::ostream &teaching_project::operator <<(std::ostream &,const teaching_project::Points2D<double> &)'
+C:\Users\pasha\source\repos\arrays\arrays\Source.cpp(54): message : see reference to function template instantiation 'std::ostream &teaching_project::operator <<(std::ostream &,const teaching_project::Points2D<double> &)' being compiled
+C:\Users\pasha\source\repos\arrays\arrays\Source.cpp(51): message : see reference to class template instantiation 'teaching_project::Points2D<double>' being compiled
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(95,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(89): message : while compiling class template member function 'teaching_project::Points2D<int> &teaching_project::Points2D<int>::operator =(teaching_project::Points2D<int> &&)'
+C:\Users\pasha\source\repos\arrays\arrays\Source.cpp(45): message : see reference to function template instantiation 'teaching_project::Points2D<int> &teaching_project::Points2D<int>::operator =(teaching_project::Points2D<int> &&)' being compiled
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(104,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(69,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(62): message : while compiling class template member function 'teaching_project::Points2D<int>::Points2D(teaching_project::Points2D<int> &&)'
+C:\Users\pasha\source\repos\arrays\arrays\Source.cpp(40): message : see reference to function template instantiation 'teaching_project::Points2D<int>::Points2D(teaching_project::Points2D<int> &&)' being compiled
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(79,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(39,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\arrays\arrays\points2d.h(33): message : while compiling class template member function 'teaching_project::Points2D<int>::Points2D(const teaching_project::Points2D<int> &)'
+C:\Users\pasha\source\repos\arrays\arrays\Source.cpp(33): message : see reference to function template instantiation 'teaching_project::Points2D<int>::Points2D(const teaching_project::Points2D<int> &)' being compiled
+  arrays.vcxproj -> C:\Users\pasha\source\repos\arrays\Debug\arrays.exe

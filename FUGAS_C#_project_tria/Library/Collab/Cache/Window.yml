@@ -14,17 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Prefabs/clickOnButtonEffect.prefab
-    - Assets/Prefabs/conqueredBasebyComputer.prefab
-    - Assets/Prefabs/conqueredBasebyPlayer.prefab
-    - Assets/Prefabs/enemyPoint.prefab
-    - Assets/Scenes/Credits.unity
-    - Assets/Sound/angelina.mp3
-    - Assets/Sound/angelina.mp3.meta
-    - Assets/TestScripts/ButtonManager.cs
-    - Assets/TestScripts/audioController.cs
+    - Assets/Scenes/Game.unity
+    - Assets/Scenes/MainMenu.unity
+    - Assets/Scripts/checkAvailableLevel.cs
+    - Assets/Scripts/triangulation/triangulation.cs
     - 
-    m_Values: 00000000000000000000
+    m_Values: 0000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

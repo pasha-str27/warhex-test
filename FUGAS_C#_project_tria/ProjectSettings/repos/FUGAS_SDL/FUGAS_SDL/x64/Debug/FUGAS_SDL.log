@@ -1,0 +1,8 @@
+﻿  Source3.cpp
+  Source4.cpp
+C:\Users\pasha\source\repos\FUGAS_SDL\FUGAS_SDL\Source4.cpp(138,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\pasha\source\repos\FUGAS_SDL\FUGAS_SDL\Source4.cpp(155,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\pasha\source\repos\FUGAS_SDL\FUGAS_SDL\Source4.cpp(214,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\pasha\source\repos\FUGAS_SDL\FUGAS_SDL\Source4.cpp(214,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  FUGAS_SDL.vcxproj -> C:\Users\pasha\source\repos\FUGAS_SDL\x64\Debug\FUGAS_SDL.exe

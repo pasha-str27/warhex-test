@@ -1,0 +1,3 @@
+﻿  Source.c
+C:\Users\pasha\source\repos\ci_project\ci_project\Source.c(93,8): warning C4013: 'system' undefined; assuming extern returning int
+  ci_project.vcxproj -> C:\Users\pasha\source\repos\ci_project\Debug\ci_project.exe

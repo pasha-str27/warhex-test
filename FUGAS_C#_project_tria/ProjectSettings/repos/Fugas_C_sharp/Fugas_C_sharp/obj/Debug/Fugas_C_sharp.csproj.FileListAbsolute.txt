@@ -1,0 +1,7 @@
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\bin\Debug\Fugas_C_sharp.exe.config
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\bin\Debug\Fugas_C_sharp.exe
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\bin\Debug\Fugas_C_sharp.pdb
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\obj\Debug\Fugas_C_sharp.csprojAssemblyReference.cache
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\obj\Debug\Fugas_C_sharp.csproj.CoreCompileInputs.cache
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\obj\Debug\Fugas_C_sharp.exe
+C:\Users\pasha\source\repos\Fugas_C_sharp\Fugas_C_sharp\obj\Debug\Fugas_C_sharp.pdb

@@ -1,0 +1,7 @@
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\bin\Debug\lab2_MF.exe.config
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\bin\Debug\lab2_MF.exe
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\bin\Debug\lab2_MF.pdb
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\obj\Debug\lab2_MF.csprojAssemblyReference.cache
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\obj\Debug\lab2_MF.csproj.CoreCompileInputs.cache
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\obj\Debug\lab2_MF.exe
+C:\Users\pasha\source\repos\lab2_MF\lab2_MF\obj\Debug\lab2_MF.pdb

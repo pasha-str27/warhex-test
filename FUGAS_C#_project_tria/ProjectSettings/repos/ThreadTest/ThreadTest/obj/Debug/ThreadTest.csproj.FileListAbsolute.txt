@@ -1,0 +1,7 @@
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\bin\Debug\ThreadTest.exe.config
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\bin\Debug\ThreadTest.exe
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\bin\Debug\ThreadTest.pdb
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\obj\Debug\ThreadTest.csprojAssemblyReference.cache
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\obj\Debug\ThreadTest.csproj.CoreCompileInputs.cache
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\obj\Debug\ThreadTest.exe
+C:\Users\pasha\source\repos\ThreadTest\ThreadTest\obj\Debug\ThreadTest.pdb

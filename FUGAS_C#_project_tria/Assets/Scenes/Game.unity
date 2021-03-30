@@ -494,6 +494,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368004031}
   m_CullTransparentMesh: 1
+--- !u!1 &374336404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 374336405}
+  - component: {fileID: 374336407}
+  - component: {fileID: 374336406}
+  m_Layer: 5
+  m_Name: Number
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &374336405
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374336404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1419477557}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &374336406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374336404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 88901e483fb5bcc48b926ccbf5e878ef, type: 3}
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 80
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &374336407
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374336404}
+  m_CullTransparentMesh: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +961,7 @@ GameObject:
   - component: {fileID: 1181027074}
   - component: {fileID: 1181027073}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: BackgroundCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,7 +1229,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 374336405}
   m_Father: {fileID: 1407665052}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1179,7 +1259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c6de8b1cf31c2d04d943cfa199a026cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a0ef201c295d69047a17e589437bab8f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1316,7 +1396,6 @@ MonoBehaviour:
   spheres: []
   conqueredBases: []
   finishBase: {x: 0, y: 0}
-  maxPointCount: 0
 --- !u!4 &1504740683
 Transform:
   m_ObjectHideFlags: 0
@@ -2097,16 +2176,7 @@ MonoBehaviour:
   - {x: 4, y: 5}
   - {x: 2, y: 1.5}
   - {x: 2, y: -1.5}
-  levelText: {fileID: 1419477558}
-  levelImages:
-  - {fileID: 21300000, guid: c6de8b1cf31c2d04d943cfa199a026cf, type: 3}
-  - {fileID: 21300000, guid: 99767a6b44deb024cac070e065abc360, type: 3}
-  - {fileID: 21300000, guid: 3665d525bfc356e4c9d9fce739c1c62f, type: 3}
-  - {fileID: 21300000, guid: a6a666fa2cfec6848b44062aef060882, type: 3}
-  - {fileID: 21300000, guid: 1635314aa99f86449b7d52415969cba4, type: 3}
-  - {fileID: 21300000, guid: 3dc857ef867b68f4cb7c0eaadb3766e5, type: 3}
-  - {fileID: 21300000, guid: 4e78ec49cd03a7a4ebc243862f6f388c, type: 3}
-  - {fileID: 21300000, guid: 8547f00c84fec5247ac40942da8e7401, type: 3}
+  levelText: {fileID: 374336406}
 --- !u!4 &1943448756
 Transform:
   m_ObjectHideFlags: 0

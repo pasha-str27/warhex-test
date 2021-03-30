@@ -1,0 +1,7 @@
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\bin\Debug\lab2_opt.exe.config
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\bin\Debug\lab2_opt.exe
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\bin\Debug\lab2_opt.pdb
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\obj\Debug\lab2_opt.csprojAssemblyReference.cache
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\obj\Debug\lab2_opt.csproj.CoreCompileInputs.cache
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\obj\Debug\lab2_opt.exe
+C:\Users\pasha\source\repos\lab2_opt\lab2_opt\obj\Debug\lab2_opt.pdb

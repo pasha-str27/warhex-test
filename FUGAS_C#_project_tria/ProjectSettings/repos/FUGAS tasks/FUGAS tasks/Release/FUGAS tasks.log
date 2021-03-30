@@ -1,0 +1,8 @@
+﻿  Source.cpp
+C:\Users\pasha\source\repos\FUGAS tasks\FUGAS tasks\Source.cpp(85,27): warning C4018: '<=': signed/unsigned mismatch
+  Generating code
+  1 of 167 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  FUGAS tasks.vcxproj -> C:\Users\pasha\source\repos\FUGAS tasks\Release\FUGAS tasks.exe

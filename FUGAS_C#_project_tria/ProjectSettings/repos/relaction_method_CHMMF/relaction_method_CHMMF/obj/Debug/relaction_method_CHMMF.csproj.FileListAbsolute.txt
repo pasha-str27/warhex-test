@@ -1,0 +1,7 @@
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\bin\Debug\relaction_method_CHMMF.exe.config
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\bin\Debug\relaction_method_CHMMF.exe
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\bin\Debug\relaction_method_CHMMF.pdb
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\obj\Debug\relaction_method_CHMMF.csprojAssemblyReference.cache
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\obj\Debug\relaction_method_CHMMF.csproj.CoreCompileInputs.cache
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\obj\Debug\relaction_method_CHMMF.exe
+C:\Users\pasha\source\repos\relaction_method_CHMMF\relaction_method_CHMMF\obj\Debug\relaction_method_CHMMF.pdb

@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\pasha\source\repos\linear_search\linear_search\Source.cpp(12,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\pasha\source\repos\linear_search\linear_search\Source.cpp(26,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  linear_search.vcxproj -> C:\Users\pasha\source\repos\linear_search\Debug\linear_search.exe
