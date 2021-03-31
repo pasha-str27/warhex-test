@@ -117,7 +117,7 @@ MonoBehaviour:
   goal: {x: 0, y: 0}
   beginLine: {x: 0, y: 0}
   endLine: {x: 0, y: 0}
-  speed: 8
+  speed: 8.67
   movingToEnemy: 0
 --- !u!50 &-3638227038024582043
 Rigidbody2D:

@@ -3,17 +3,21 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AIManager
     - AntColony
-    - Assets.TestScripts.triangulation.triangulation
+    - Assets.Scripts.triangulation.triangulation
     - Base
     - ButtonManager
     - PlayerManager
     - audioController
+    - buttonDifficultController
+    - checkAvailableLevel
+    - difficultyController
     - movePoint
     - turnOnCollider
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
@@ -39,10 +43,13 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.HorizontalLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.RectMask2D
+    - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
@@ -83,15 +90,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2734}
     - Class: 114
-      Script: {instanceID: 2908}
+      Script: {instanceID: 2910}
     - Class: 114
-      Script: {instanceID: 3128}
+      Script: {instanceID: 3130}
     - Class: 114
-      Script: {instanceID: 3242}
+      Script: {instanceID: 3244}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 3588}
+      Script: {instanceID: 3590}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -150,30 +157,34 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1954}
     - Class: 114
+      Script: {instanceID: 2186}
+    - Class: 114
       Script: {instanceID: 2582}
     - Class: 114
       Script: {instanceID: 2706}
     - Class: 114
       Script: {instanceID: 2734}
     - Class: 114
-      Script: {instanceID: 2908}
+      Script: {instanceID: 2910}
     - Class: 114
-      Script: {instanceID: 2938}
+      Script: {instanceID: 2940}
     - Class: 114
-      Script: {instanceID: 3128}
+      Script: {instanceID: 3130}
     - Class: 114
-      Script: {instanceID: 3242}
+      Script: {instanceID: 3244}
     - Class: 114
-      Script: {instanceID: 3512}
+      Script: {instanceID: 3514}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 3910}
+      Script: {instanceID: 3912}
     - Class: 114
-      Script: {instanceID: 4170}
+      Script: {instanceID: 4172}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -233,17 +244,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2734}
     - Class: 114
-      Script: {instanceID: 2908}
+      Script: {instanceID: 2826}
     - Class: 114
-      Script: {instanceID: 3128}
+      Script: {instanceID: 2910}
     - Class: 114
-      Script: {instanceID: 3242}
+      Script: {instanceID: 3130}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3244}
     - Class: 114
-      Script: {instanceID: 3588}
+      Script: {instanceID: 3440}
     - Class: 114
-      Script: {instanceID: 5210}
+      Script: {instanceID: 3580}
+    - Class: 114
+      Script: {instanceID: 3590}
+    - Class: 114
+      Script: {instanceID: 4280}
+    - Class: 114
+      Script: {instanceID: 4340}
+    - Class: 114
+      Script: {instanceID: 4416}
+    - Class: 114
+      Script: {instanceID: 4874}
+    - Class: 114
+      Script: {instanceID: 5216}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -367,9 +390,9 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: e0afac22d46027d2f7e679fe3eefb6b4
+      Hash: 5cdbebfd4273b0b49d2659e0d4c6250f
     assemblyName: Assembly-CSharp.dll
-    namespaceName: Assets.TestScripts.triangulation
+    namespaceName: Assets.Scripts.triangulation
     className: triangulation
   - hash:
       serializedVersion: 2
@@ -391,7 +414,7 @@ ScriptsOnlyBuild:
     className: DepthOfField
   - hash:
       serializedVersion: 2
-      Hash: 2019ee37d55a7c1bbe92b15948f03b08
+      Hash: 22f06fd144c5f91c4a07cd0699e1c9e0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AIManager
@@ -503,6 +526,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: cc560a463228beaed93030640a0d386f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: checkAvailableLevel
   - hash:
       serializedVersion: 2
       Hash: 61b9d9b6f4b6a222dfea8b131b3d3227
@@ -787,6 +816,12 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
+      Hash: c8eedbe1a9ae7f5cbab9d1ed82e353ac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: buttonDifficultController
+  - hash:
+      serializedVersion: 2
       Hash: 38bcb4d3f9a1812fd650f92e87a4cf64
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -893,6 +928,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: difficultyController
   - hash:
       serializedVersion: 2
       Hash: 63d7b9b64a11859f416d72ba9a3c3fec

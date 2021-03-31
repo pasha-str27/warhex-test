@@ -57,8 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\movePoint.cs" />
-    <Compile Include="Assets\LineDraw\Scripts\LineFactory.cs" />
-    <Compile Include="Assets\LineDraw\Scripts\Line.cs" />
     <Compile Include="Assets\Scripts\triangulation\Line.cs" />
     <Compile Include="Assets\Scripts\triangulation\triangulation.cs" />
     <Compile Include="Assets\Scripts\triangulation\Point.cs" />
@@ -71,14 +69,11 @@
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
     <Compile Include="Assets\Scripts\AntColony.cs" />
     <Compile Include="Assets\Scripts\buttonDifficultController.cs" />
-    <Compile Include="Assets\LineDraw\Scripts\Extensions.cs" />
     <Compile Include="Assets\Scripts\difficultyController.cs" />
-    <Compile Include="Assets\LineDraw\_Demo\LineDemo.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Prefabs\PlayerRadialFill.shader" />
      <None Include="Assets\Materials\SimpleGrabPassBlur.shader" />
-     <None Include="Assets\LineDraw\Documentation\Read Me.txt" />
      <None Include="Assets\Prefabs\ComputerRadialFill.shader" />
      <None Include="Assets\levels.txt" />
     <Reference Include="UnityEngine">

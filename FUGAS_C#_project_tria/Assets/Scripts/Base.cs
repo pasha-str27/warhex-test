@@ -18,7 +18,6 @@ public class Base : MonoBehaviour
     public GameObject conqueredBaseEffectByPlayer;
     public GameObject conqueredBaseEffectByComputer;
 
-    public static int CurrentMaxIndexAI;
     int indexForAI;
 
     public bool isEnamyBase;
@@ -79,45 +78,38 @@ public class Base : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //if base was conquered early then set 'zerous' values for enemy
-        if (enemyScore == 10 && collision.GetComponent<movePoint>().isPlayer)
+        if (gameObject.tag == "Point")
         {
-            playerScore=1;
-            --enemyScore;
-        }
-        else
-        {
-            if (playerScore == 10 && !collision.GetComponent<movePoint>().isPlayer)
-            {
-                --playerScore;
-                enemyScore=1;
 
-                //upgrate progress bar for base
-                gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().material.SetFloat("_Arc1", 360 - playerScore * 36);
-                gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", 360 - enemyScore * 36);
+            if (enemyScore == 10 && collision.GetComponent<movePoint>().isPlayer)
+            {
+                playerScore = 1;
+                --enemyScore;
             }
             else
             {
-                //upgrate enemy and player scores
-                if (enemyScore <= 9 && playerScore <= 9)
+                if (playerScore == 10 && !collision.GetComponent<movePoint>().isPlayer)
                 {
-                    if (collision.GetComponent<movePoint>().isPlayer)
+                    --playerScore;
+                    enemyScore = 1;
+                }
+                else
+                {
+                    //upgrate enemy and player scores
+                    if (enemyScore <= 9 && playerScore <= 9)
                     {
-                        ++playerScore;
-                        if (enemyScore > 0)
-                            --enemyScore;
-                    }
-                    else
-                    {
-                        if(playerScore>0)
-                            --playerScore;
-                        ++enemyScore;
-                    }
-
-                    if (gameObject.tag == "Point")
-                    {
-                        //upgrate progress bar for base
-                        gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().material.SetFloat("_Arc1", 360 - playerScore * 36);
-                        gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", 360 - enemyScore * 36);
+                        if (collision.GetComponent<movePoint>().isPlayer)
+                        {
+                            ++playerScore;
+                            if (enemyScore > 0)
+                                --enemyScore;
+                        }
+                        else
+                        {
+                            if (playerScore > 0)
+                                --playerScore;
+                            ++enemyScore;
+                        }
 
                         //if base was conquered by player
                         if (playerScore == 10 && enemyScore == 0)
@@ -131,10 +123,11 @@ public class Base : MonoBehaviour
 
                             changeColorForLinesOnGray(colorChanger);
 
-                            //if base was conquared by computer
-                            if(indexForAI > 0)
+                            //if base was early conquared by computer
+                            if (indexForAI > 0)
                             {
                                 //then destroy all points which was spawn after conquared this base by computer
+
                                 for (int i = AIManager_.conqueredBases.Count - 1; i >= indexForAI; --i)
                                 {
                                     AIManager_.conqueredBases[i].GetComponent<SpriteRenderer>().color = Color.white;
@@ -142,21 +135,18 @@ public class Base : MonoBehaviour
                                     AIManager_.conqueredBases[i].GetComponent<Base>().isEnamyBase = false;
                                     AIManager_.conqueredBases[i].transform.GetChild(1).GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", 360);
                                     AIManager_.conqueredBases.RemoveAt(i);
-                                    Destroy(AIManager_.spheres[i-1]);
+                                    Destroy(AIManager_.spheres[i - 1]);
                                     movePoint.EnemyNumber--;
-                                    AIManager_.spheres.RemoveAt(i-1);
+                                    AIManager_.spheres.RemoveAt(i - 1);
                                 }
 
                                 //and change color for lines
                                 foreach (var line in colorChanger.LineRenderersList)
-                                    if(findLineInPlayerAndAI(line))
+                                    if (findLineInPlayerAndAI(line))
                                     {
                                         line.startColor = Color.gray;
                                         line.endColor = Color.gray;
                                     }
-
-                                //change current number of conquered bases by computer
-                                CurrentMaxIndexAI = indexForAI;
                             }
 
                             //change color for base
@@ -167,7 +157,7 @@ public class Base : MonoBehaviour
                                 playerManager_.conqueredBases.Add((gameObject));
 
                             //and change color for conquered lines
-                            for (int i = 0; i < playerManager_.conqueredBases.Count ; ++i)
+                            for (int i = 0; i < playerManager_.conqueredBases.Count; ++i)
                                 colorChanger.ChangeLineColor(gameObject.transform.position, playerManager_.conqueredBases[i].transform.position, playerColor);
 
                             indexForAI = 0;
@@ -183,7 +173,7 @@ public class Base : MonoBehaviour
                             {
                                 AntColony colorChanger = GameObject.FindGameObjectWithTag("antColony").GetComponent<AntColony>();
                                 Destroy(Instantiate(conqueredBaseEffectByComputer), 1);
- 
+
                                 //change color for lines
                                 changeColorForLinesOnGray(colorChanger);
 
@@ -191,7 +181,7 @@ public class Base : MonoBehaviour
                                 playerManager_.conqueredBases.Remove(gameObject);
 
                                 colorChanger.ChangeLineColor(collision.GetComponent<movePoint>().beginLine, collision.GetComponent<movePoint>().endLine, enemyColor);
-                                
+
                                 //change color for base
                                 gameObject.GetComponent<SpriteRenderer>().color = enemyColor;
 
@@ -205,8 +195,7 @@ public class Base : MonoBehaviour
                                     point.GetComponent<movePoint>().speed *= PlayerPrefs.GetInt("dificulty");
                                     AIManager_.conqueredBases.Add(gameObject);
                                     AIManager_.spheres.Add(point);
-                                    ++CurrentMaxIndexAI;
-                                    indexForAI = CurrentMaxIndexAI;
+                                    indexForAI = AIManager_.conqueredBases.Count-1;
                                 }
 
                                 isEnamyBase = true;
@@ -219,8 +208,11 @@ public class Base : MonoBehaviour
                     }
                 }
             }
+            //upgrate progress bar for base
+            gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().material.SetFloat("_Arc1", 360 - playerScore * 36);
+            gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().material.SetFloat("_Arc2", 360 - enemyScore * 36);
         }
-        
+
         //change direction for point
         if (collision.GetComponent<movePoint>().movingToEnemy)
             collision.GetComponent<movePoint>().goal = collision.GetComponent<movePoint>().beginLine;

@@ -22,7 +22,7 @@ namespace Assets.Scripts.triangulation
             //reset count of computer`s and player`s points
             movePoint.EnemyNumber = 0;
             movePoint.PlayerNumber = 0;
-
+            
             //get current level
             if(level==0&&!PlayerPrefs.HasKey("currentLevel"))
             {
