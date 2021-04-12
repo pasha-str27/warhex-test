@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Prefabs/playerPoint.prefab
-    - Assets/Scripts/triangulation/triangulation.cs
-    - Assets/levels.txt
     - 
-    m_Values: 00000000
+    m_Values: 01
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

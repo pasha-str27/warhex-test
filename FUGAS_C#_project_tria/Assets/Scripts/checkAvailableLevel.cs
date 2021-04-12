@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class checkAvailableLevel : MonoBehaviour
 {
     public int level;
+    public Color unavailableColor;
 
     void Start()
     {
@@ -15,7 +16,7 @@ public class checkAvailableLevel : MonoBehaviour
         if (level > PlayerPrefs.GetInt("currentLevel"))
         {
             GetComponent<Button>().enabled = false;
-            transform.GetChild(0).GetComponent<Text>().color = new Color(128f / 255f, 65f / 255f, 65f / 255f);
+            transform.GetComponent<Text>().color = unavailableColor;
         }
     }
 }

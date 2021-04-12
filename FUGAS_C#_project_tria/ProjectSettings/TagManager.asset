@@ -19,6 +19,8 @@ TagManager:
   - pauseButton
   - menuButton
   - restartLevelButton
+  - gameMenu
+  - animation
   layers:
   - Default
   - TransparentFX

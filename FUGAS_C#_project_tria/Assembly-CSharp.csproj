@@ -56,26 +56,33 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\tutorial\BaseTutorialLevel2.cs" />
     <Compile Include="Assets\Scripts\movePoint.cs" />
     <Compile Include="Assets\Scripts\triangulation\Line.cs" />
     <Compile Include="Assets\Scripts\triangulation\triangulation.cs" />
     <Compile Include="Assets\Scripts\triangulation\Point.cs" />
     <Compile Include="Assets\Scripts\AIManager.cs" />
     <Compile Include="Assets\Scripts\audioController.cs" />
+    <Compile Include="Assets\Scripts\tutorial\spawnOnePoint.cs" />
     <Compile Include="Assets\Scripts\Base.cs" />
     <Compile Include="Assets\Scripts\checkAvailableLevel.cs" />
     <Compile Include="Assets\Scripts\turnOnCollider.cs" />
+    <Compile Include="Assets\Scripts\FlexibleGridLayout.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\tutorial\SpawnPoints.cs" />
     <Compile Include="Assets\Scripts\AntColony.cs" />
+    <Compile Include="Assets\Scripts\tutorial\BaseTutorial.cs" />
     <Compile Include="Assets\Scripts\buttonDifficultController.cs" />
+    <Compile Include="Assets\Scripts\tutorial\TipsAnimationsController.cs" />
     <Compile Include="Assets\Scripts\difficultyController.cs" />
+    <Compile Include="Assets\Scripts\tutorial\PlayerControllerTutorial.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Prefabs\PlayerRadialFill.shader" />
      <None Include="Assets\Materials\SimpleGrabPassBlur.shader" />
      <None Include="Assets\Prefabs\ComputerRadialFill.shader" />
-     <None Include="Assets\levels.txt" />
+     <None Include="Assets\Resources\levels.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.2.6f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -661,17 +668,11 @@
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>

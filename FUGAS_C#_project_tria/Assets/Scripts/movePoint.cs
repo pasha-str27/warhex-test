@@ -24,10 +24,12 @@ public class movePoint : MonoBehaviour
         get; set;
     }
 
+    int maxPlayerCount = 3;
+
     private void Start()
     {
         letMovePoint = true;
-        if (PlayerNumber == 3)
+        if (PlayerNumber == maxPlayerCount)
             PlayerNumber = -1;
 
         if (EnemyNumber == 0 || PlayerNumber == 0|| !isPlayer)
@@ -37,7 +39,7 @@ public class movePoint : MonoBehaviour
         else
             PlayerNumber++;
 
-        if (!isPlayer || PlayerNumber <=3)
+        if (!isPlayer || PlayerNumber <= maxPlayerCount)
             beginLine = transform.position;
 
         StartCoroutine(turnOnCollider());

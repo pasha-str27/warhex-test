@@ -12,7 +12,7 @@ namespace Assets.Scripts.triangulation
         public Vector2 Origin { get;  set; }
         public Vector2 Destination { get;  set; }
 
-        public float Pheromon { get; set; }
+        public float Pheromone { get; set; }
 
         public int CirclesOnLine { get; set; }
 
@@ -20,7 +20,7 @@ namespace Assets.Scripts.triangulation
         {
             Origin = origin;
             Destination = destination;
-            Pheromon = 1;
+            Pheromone = 1;
             CirclesOnLine = 4;
         }
 
@@ -29,7 +29,7 @@ namespace Assets.Scripts.triangulation
         {
             Origin = new Vector2(x1, y1);
             Destination = new Vector2(x2, y2);
-            Pheromon = 1;
+            Pheromone = 1;
             CirclesOnLine = 4;
         }
 
@@ -37,11 +37,11 @@ namespace Assets.Scripts.triangulation
         {
             Origin = other.Origin;
             Destination = other.Destination;
-            Pheromon = 1;
+            Pheromone = 1;
             CirclesOnLine = 4;
         }
 
-        public float Lenght
+        public float Length
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Assets.Scripts.triangulation
             Rotate();
         }
 
-        // returns paramter of intersection equation. NaN if no intersection
+        // returns parametr of intersection equation. NaN if no intersection
         public double Intersect(Line other)
         {
             var t = Double.NaN;

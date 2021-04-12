@@ -15,26 +15,40 @@ public class AntColony : MonoBehaviour
     private List<GameObject> _pointsList;
     private List<Assets.Scripts.triangulation.Line> _linesList;
     private List<List<Assets.Scripts.triangulation.Line>> _antColonyWay;
-    private List<float> _antColonyWaysLenght;
+    private List<float> _antColonyWayLength;
 
     private GameObject _startBase;
     private GameObject _endBase;
-    
+
     private float _sceneWidth = 10;
 
     private float _evaporationLevel = 0.01f;
-    private int _iterationsNumber = 125;
+    private int _iterationsNumber = 50;
+    private int _tryNumber = 200;
 
     public GameObject enemyPoint;
     public GameObject playerPoint;
 
+    static PlayerManager _playerManager;
+    static AIManager _AIManager;
+
+    public GameObject tip;
+
+    public static bool wasClick;
+
     void Start()
     {
+        if (_playerManager == null)
+            _playerManager = GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>();
+
+        if (_AIManager == null)
+            _AIManager = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>();
+
         _pointsList = new List<GameObject>();
         _lineRenderersList = new List<LineRenderer>();
         _linesList = new List<Assets.Scripts.triangulation.Line>();
         _antColonyWay = new List<List<Assets.Scripts.triangulation.Line>>();
-        _antColonyWaysLenght = new List<float>();
+        _antColonyWayLength = new List<float>();
         _triangulation = _triangulationObject.GetComponent<Assets.Scripts.triangulation.triangulation>();
 
         _triangulation.Start_();
@@ -51,54 +65,79 @@ public class AntColony : MonoBehaviour
         for (int i = 0; i < _iterationsNumber; ++i)
             FindAntColonyWay();
 
-        Debug.LogWarning("Best way: " + _antColonyWaysLenght.Min());
+        Debug.LogWarning("Best way: " + _antColonyWayLength.Min());
 
-        createPoint();
+        StartCoroutine(WaitOnClick());
     }
 
-    void createPoint()
+    IEnumerator WaitOnClick()
     {
-        GameObject enemyPointFirst = Instantiate(enemyPoint, _endBase.transform.position,Quaternion.identity);
-        
-        enemyPointFirst.GetComponent<movePoint>().endLine = _antColonyWay[_antColonyWaysLenght.IndexOf(_antColonyWaysLenght.Min())][_antColonyWay[_antColonyWaysLenght.IndexOf(_antColonyWaysLenght.Min())].Count-1].Origin;
-        enemyPointFirst.GetComponent<movePoint>().goal = enemyPointFirst.GetComponent<movePoint>().endLine;
-        enemyPointFirst.GetComponent<movePoint>().speed *= PlayerPrefs.GetInt("dificulty");
+        while (true)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            {
+                Destroy(tip);
+                wasClick = true;
+                break;
+            }
+        }
 
-        GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().finishBase = enemyPointFirst.GetComponent<movePoint>().endLine;
+        createPoints();
+    }
 
-        if (GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().conqueredBases == null)
-            GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().conqueredBases = new List<GameObject>();
+    void createPoints()
+    {
+        GameObject enemyPointFirst = Instantiate(enemyPoint, _endBase.transform.position, Quaternion.identity);
 
+        var movePoint_ = enemyPointFirst.GetComponent<movePoint>();
 
-        GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().conqueredBases.Add(_startBase);
+        movePoint_.endLine = _antColonyWay[_antColonyWayLength.IndexOf(_antColonyWayLength.Min())][_antColonyWay[_antColonyWayLength.IndexOf(_antColonyWayLength.Min())].Count - 1].Origin;
+        movePoint_.goal = movePoint_.endLine;
+        movePoint_.speed *= PlayerPrefs.GetInt("difficulty");
+        movePoint_.beginLine = _endBase.transform.position;
 
-        if (GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().conqueredBases == null)
-            GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().conqueredBases = new List<GameObject>();
+        _playerManager.finishBase = enemyPointFirst.GetComponent<movePoint>().beginLine;
 
-        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().conqueredBases.Add(_endBase);
+        if (_playerManager.conqueredBases == null)
+            _playerManager.conqueredBases = new List<GameObject>();
+
+        _playerManager.conqueredBases.Add(_startBase);
+
+        if (_AIManager.conqueredBases == null)
+            _AIManager.conqueredBases = new List<GameObject>();
+
+        _AIManager.conqueredBases.Add(_endBase);
         StartCoroutine(createPlayerPoints());
     }
 
     IEnumerator createPlayerPoints()
     {
-        if (GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().spheres == null)
-            GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().spheres = new List<GameObject>();
+        if (_playerManager.spheres == null)
+            _playerManager.spheres = new List<GameObject>();
+
+        Vector2 goal = _antColonyWay[_antColonyWayLength.IndexOf(_antColonyWayLength.Min())][1].Origin;
 
         for (int i = 0; i < 3; ++i)
         {
             GameObject playerPointFirst = Instantiate(playerPoint, _startBase.transform.position, Quaternion.identity);
-            playerPointFirst.GetComponent<movePoint>().endLine = _antColonyWay[_antColonyWaysLenght.IndexOf(_antColonyWaysLenght.Min())][1].Origin;
-            playerPointFirst.GetComponent<movePoint>().goal = playerPointFirst.GetComponent<movePoint>().endLine;
-            playerPointFirst.GetComponent<movePoint>().speed *= PlayerPrefs.GetInt("dificulty");
-            GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().spheres.Add(playerPointFirst);
-            yield return new WaitForSeconds(0.2f* PlayerPrefs.GetInt("dificulty"));
+
+            var movePoint_ = playerPointFirst.GetComponent<movePoint>();
+
+            movePoint_.endLine = goal;
+            movePoint_.goal = goal;
+            movePoint_.speed *= PlayerPrefs.GetInt("difficulty");
+            _playerManager.spheres.Add(playerPointFirst);
+
+            yield return new WaitForSeconds(0.2f * PlayerPrefs.GetInt("difficulty"));
         }
-        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().finishBase = GameObject.FindGameObjectWithTag("playerController").GetComponent<PlayerManager>().spheres[0].GetComponent<movePoint>().endLine;
+
+        _AIManager.finishBase = _playerManager.spheres[0].GetComponent<movePoint>().beginLine;
     }
 
     public Assets.Scripts.triangulation.Line ColonyWay(int index)
     {
-         return _antColonyWay[_antColonyWaysLenght.IndexOf(_antColonyWaysLenght.Min())][_antColonyWay[_antColonyWaysLenght.IndexOf(_antColonyWaysLenght.Min())].Count - index - 1];
+        return _antColonyWay[_antColonyWayLength.IndexOf(_antColonyWayLength.Min())][_antColonyWay[_antColonyWayLength.IndexOf(_antColonyWayLength.Min())].Count - index - 1];
     }
 
     void GeneratePoints()
@@ -115,11 +154,15 @@ public class AntColony : MonoBehaviour
         }
     }
 
-    public void ChangeLineColor(Vector2 start, Vector2 end,Color color)
+    public void ChangeLineColor(Vector2 start, Vector2 end, Color color)
     {
-        List<LineRenderer> lines = _lineRenderersList.FindAll(x => Vector2.Equals(new Vector2(x.GetPosition(0).x, x.GetPosition(0).y), start) && Vector2.Equals(new Vector2(x.GetPosition(1).x, x.GetPosition(1).y), end)
-         || Vector2.Equals(new Vector2(x.GetPosition(0).x, x.GetPosition(0).y), end) && Vector2.Equals(new Vector2(x.GetPosition(1).x, x.GetPosition(1).y), start));
-        for(int i=0;i< lines.Count;++i)
+        List<LineRenderer> lines = _lineRenderersList.FindAll(x =>
+        Vector2.Equals(new Vector2(x.GetPosition(0).x, x.GetPosition(0).y), start)
+        && Vector2.Equals(new Vector2(x.GetPosition(1).x, x.GetPosition(1).y), end)
+         || Vector2.Equals(new Vector2(x.GetPosition(0).x, x.GetPosition(0).y), end)
+         && Vector2.Equals(new Vector2(x.GetPosition(1).x, x.GetPosition(1).y), start));
+
+        for (int i = 0; i < lines.Count; ++i)
         {
             lines[i].startColor = color;
             lines[i].endColor = color;
@@ -133,6 +176,16 @@ public class AntColony : MonoBehaviour
             _linesList.Add(line);
     }
 
+    Vector2 FindNearestPointPosition(Transform point)
+    {
+        List<float> minDis = new List<float>();
+
+        for (int i = 0; i < _pointsList.Count; ++i)
+            minDis.Add(Vector3.Distance(point.position, _pointsList[i].transform.position));
+
+        var nearestPointPosition = _pointsList[minDis.IndexOf(minDis.Min())].transform.position;
+        return new Vector2(nearestPointPosition.x, nearestPointPosition.y);
+    }
     void GenerateLines()
     {
         if (_linesList.Count == 0)
@@ -152,27 +205,22 @@ public class AntColony : MonoBehaviour
                 AddLineToLinesList(new Assets.Scripts.triangulation.Line(i.A.x, i.A.y, i.C.x, i.C.y));
             }
 
-            List<float> minDis = new List<float>();
+            var startBasePosition = _startBase.transform.position;
+            var endBasePosition = _endBase.transform.position;
 
-            for (int i = 0; i < _pointsList.Count; ++i)
-                minDis.Add(Vector3.Distance(_startBase.transform.position, _pointsList[i].transform.position));
+            var nearestPoint = FindNearestPointPosition(_startBase.transform);
 
             _linesList.Insert(0, new Assets.Scripts.triangulation.Line
-                        (_startBase.transform.position.x,
-                            _startBase.transform.position.y,
-                            _linesList.Find(x => x.Origin.Equals(new Vector2(_pointsList[minDis.IndexOf(minDis.Min())].transform.position.x, _pointsList[minDis.IndexOf(minDis.Min())].transform.position.y))).Origin.x,
-                             _linesList.Find(x => x.Origin.Equals(new Vector2(_pointsList[minDis.IndexOf(minDis.Min())].transform.position.x, _pointsList[minDis.IndexOf(minDis.Min())].transform.position.y))).Origin.y));
+                        (startBasePosition.x, startBasePosition.y,
+                            _linesList.Find(x => x.Origin.Equals(nearestPoint)).Origin.x,
+                            _linesList.Find(x => x.Origin.Equals(nearestPoint)).Origin.y));
 
-            minDis.Clear();
-
-            for (int i = 0; i < _pointsList.Count; ++i)
-                minDis.Add(Vector3.Distance(_endBase.transform.position, _pointsList[i].transform.position));
+            nearestPoint = FindNearestPointPosition(_endBase.transform);
 
             _linesList.Add(new Assets.Scripts.triangulation.Line
-                        (_linesList.Find(x => x.Origin.Equals(new Vector2(_pointsList[minDis.IndexOf(minDis.Min())].transform.position.x, _pointsList[minDis.IndexOf(minDis.Min())].transform.position.y))).Origin.x,
-                            _linesList.Find(x => x.Origin.Equals(new Vector2(_pointsList[minDis.IndexOf(minDis.Min())].transform.position.x, _pointsList[minDis.IndexOf(minDis.Min())].transform.position.y))).Origin.y,
-                            _endBase.transform.position.x,
-                            _endBase.transform.position.y));
+                        (_linesList.Find(x => x.Origin.Equals(nearestPoint)).Origin.x,
+                            _linesList.Find(x => x.Origin.Equals(nearestPoint)).Origin.y,
+                            endBasePosition.x, endBasePosition.y));
         }
     }
 
@@ -206,9 +254,9 @@ public class AntColony : MonoBehaviour
     void SortLinesForPoint(Vector2 point)
     {
         foreach (var i in _linesList)
-            if ((i.Origin.Equals(point) || 
+            if ((i.Origin.Equals(point) ||
                 i.Destination.Equals(point)) &&
-                i.Origin.x > i.Destination.x) 
+                i.Origin.x > i.Destination.x)
                 SwapLine(i);
     }
 
@@ -224,21 +272,21 @@ public class AntColony : MonoBehaviour
 
         var currentPoint = new Vector2(_startBase.transform.position.x, _startBase.transform.position.y);
 
-        for (int index = 0; index < 200; ++index)
+        for (int index = 0; index < _tryNumber; ++index)
         {
             if (currentPoint.Equals(new Vector2(_endBase.transform.position.x, _endBase.transform.position.y)))
             {
-                float wayLenght = 0f;
+                float wayLength = 0f;
 
                 foreach (var i in tempAntColonyWay)
-                    wayLenght += i.Lenght;
+                    wayLength += i.Length;
 
-                _antColonyWaysLenght.Add(wayLenght);
+                _antColonyWayLength.Add(wayLength);
 
                 foreach (var i in _linesList)
                     foreach (var j in tempAntColonyWay)
                         if (i.Equals(j))
-                            i.Pheromon = (1 - _evaporationLevel) * i.Pheromon + 1 / wayLenght;
+                            i.Pheromone = (1 - _evaporationLevel) * i.Pheromone + 1 / wayLength;
 
                 _antColonyWay.Add(tempAntColonyWay);
 
@@ -259,9 +307,9 @@ public class AntColony : MonoBehaviour
                         float sum = 0f;
 
                         for (int j = 0; j < accessableLines.Count; ++j)
-                            sum += accessableLines[j].Lenght * accessableLines[j].Pheromon;
+                            sum += accessableLines[j].Length * accessableLines[j].Pheromone;
 
-                        probability.Add((accessableLines[i].Lenght * accessableLines[i].Pheromon) / sum);
+                        probability.Add((accessableLines[i].Length * accessableLines[i].Pheromone) / sum);
                     }
 
                     var randomSeed = Random.value;

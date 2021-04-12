@@ -27,13 +27,13 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(1)) //righrt button click
+        if (Input.GetMouseButtonUp(1)) //right button click
             processRightButton();
         if (Input.GetMouseButtonUp(0)) //left button click
             processLeftButton();
     }
 
-    //proces left button click (set point to line)
+    //process left button click (set point to line)
     void processLeftButton()
     {
         if (availableSpheres.Count == 0)
@@ -45,35 +45,35 @@ public class PlayerManager : MonoBehaviour
         //and searching line with mouse coordinates
         foreach (var line in antColony.LineRenderersList)
         {
-            if (new Assets.Scripts.triangulation.Line(line.GetPosition(0), line.GetPosition(1)).isPointOnLine(mousePos, line.startWidth)
-                || new Assets.Scripts.triangulation.Line(line.GetPosition(1), line.GetPosition(0)).isPointOnLine(mousePos, line.startWidth))
+            Vector3 pos0 = line.GetPosition(0);
+            Vector3 pos1 = line.GetPosition(1);
+            if (new Assets.Scripts.triangulation.Line(pos0, pos1).isPointOnLine(mousePos, line.startWidth)
+                || new Assets.Scripts.triangulation.Line(pos1, pos0).isPointOnLine(mousePos, line.startWidth))
             {
                 for (int i = 0; i < conqueredBases.Count; ++i)
                 {
-
+                    Vector3 basePosition = conqueredBases[i].transform.position;
                     //if we founded line 
-                    if (conqueredBases[i].transform.position.x.Equals(line.GetPosition(0).x) && conqueredBases[i].transform.position.y.Equals(line.GetPosition(0).y)
-                        || conqueredBases[i].transform.position.x.Equals(line.GetPosition(1).x) && conqueredBases[i].transform.position.y.Equals(line.GetPosition(1).y))
+                    if (basePosition.x.Equals(pos0.x) && basePosition.y.Equals(pos0.y)
+                        || basePosition.x.Equals(pos1.x) && basePosition.y.Equals(pos1.y))
                     {
-
                         //set new values for point
-                        availableSpheres[0].GetComponent<movePoint>().beginLine = new Vector2(conqueredBases[i].transform.position.x, conqueredBases[i].transform.position.y);
+                        var movePoint_ = availableSpheres[0].GetComponent<movePoint>();
+                        movePoint_.beginLine = basePosition;
 
                         availableSpheres[0].GetComponent<Collider2D>().enabled = false;
 
 
-                        if (availableSpheres[0].GetComponent<movePoint>().beginLine.x.Equals(line.GetPosition(0).x) && (availableSpheres[0].GetComponent<movePoint>().beginLine.y.Equals(line.GetPosition(0).y)))
-                        {
-                            availableSpheres[0].GetComponent<movePoint>().endLine = line.GetPosition(1);
-                        }
+                        if (movePoint_.beginLine.x.Equals(pos0.x) && (movePoint_.beginLine.y.Equals(pos0.y)))
+                            movePoint_.endLine = pos1;
                         else
-                            availableSpheres[0].GetComponent<movePoint>().endLine = line.GetPosition(0);
+                            movePoint_.endLine = line.GetPosition(0);
 
-                        availableSpheres[0].GetComponent<movePoint>().goal = availableSpheres[0].GetComponent<movePoint>().endLine;
+                        movePoint_.goal = movePoint_.endLine;
 
-                        availableSpheres[0].transform.position = conqueredBases[i].transform.position;
+                        availableSpheres[0].transform.position = basePosition;
 
-                        StartCoroutine(availableSpheres[0].GetComponent<movePoint>().turnOnCollider());
+                        StartCoroutine(movePoint_.turnOnCollider());
 
                         availableSpheres[0].SetActive(true);
 
@@ -89,7 +89,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    //proces right button click (take point from line)
+    //process right button click (take point from line)
     void processRightButton()
     {
         //read mouse pos
@@ -98,16 +98,21 @@ public class PlayerManager : MonoBehaviour
         //and searching line with mouse coordinates
         foreach (var line in antColony.LineRenderersList)
         {
-            if (new Assets.Scripts.triangulation.Line(line.GetPosition(0), line.GetPosition(1)).isPointOnLine(mousePos, line.startWidth)
-                || new Assets.Scripts.triangulation.Line(line.GetPosition(1), line.GetPosition(0)).isPointOnLine(mousePos, line.startWidth))
+            Vector3 pos0= line.GetPosition(0);
+            Vector3 pos1 = line.GetPosition(1);
+            if (new Assets.Scripts.triangulation.Line(pos0, pos1).isPointOnLine(mousePos, line.startWidth)
+                || new Assets.Scripts.triangulation.Line(pos1, pos0).isPointOnLine(mousePos, line.startWidth))
             {
                 for (int i = 0; i < spheres.Count; ++i)
                 {
                     //if we founded line 
-                    if (spheres[i].GetComponent<movePoint>().beginLine.x.Equals(line.GetPosition(0).x) && spheres[i].GetComponent<movePoint>().beginLine.y.Equals(line.GetPosition(0).y)
-                        && spheres[i].GetComponent<movePoint>().endLine.x.Equals(line.GetPosition(1).x) && spheres[i].GetComponent<movePoint>().endLine.y.Equals(line.GetPosition(1).y)
-                        || spheres[i].GetComponent<movePoint>().beginLine.x.Equals(line.GetPosition(1).x) && spheres[i].GetComponent<movePoint>().beginLine.y.Equals(line.GetPosition(1).y)
-                        && spheres[i].GetComponent<movePoint>().endLine.x.Equals(line.GetPosition(0).x) && spheres[i].GetComponent<movePoint>().endLine.y.Equals(line.GetPosition(0).y))
+                    Vector2 beginLine = spheres[i].GetComponent<movePoint>().beginLine;
+                    Vector2 endLine = spheres[i].GetComponent<movePoint>().endLine;
+
+                    if (beginLine.x.Equals(pos0.x) && beginLine.y.Equals(pos0.y)
+                        && endLine.x.Equals(pos1.x) && endLine.y.Equals(pos1.y)
+                        || beginLine.x.Equals(pos1.x) && beginLine.y.Equals(pos1.y)
+                        && endLine.x.Equals(pos0.x) && endLine.y.Equals(pos0.y))
                     {
                         //take point from line
                         spheres[i].SetActive(false);

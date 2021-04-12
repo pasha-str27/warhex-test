@@ -10,7 +10,10 @@ public class turnOnCollider : MonoBehaviour
 
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(0.5f);
+        while (!AntColony.wasClick)
+            yield return new WaitForSeconds(Time.deltaTime);
+
+        yield return new WaitForSeconds(0.3f);
         GetComponent<Collider2D>().enabled = true;
     }
 }

@@ -3,25 +3,26 @@ using UnityEngine.UI;
 
 public class buttonDifficultController : MonoBehaviour
 {
-    public int dificultLevel;
-    static Image dificultyImage;
+    public int difficultyLevel;
+    static Image difficultyImage;
 
     //searching difficulty level
     void Start()
     {
-        if (PlayerPrefs.GetInt("dificulty") == dificultLevel)
+        if (PlayerPrefs.GetInt("difficulty") == difficultyLevel)
         {
             GetComponent<Image>().color = Color.red;
-            dificultyImage = GetComponent<Image>();
+            difficultyImage = GetComponent<Image>();
         }     
     }
 
     //change diffilty level
-    public void changeDificulty()
+    public void changedifficulty()
     {
-        dificultyImage.color = Color.white;
-        GetComponent<Image>().color = Color.red;
-        dificultyImage = GetComponent<Image>();
-        PlayerPrefs.SetInt("dificulty", dificultLevel);
+        difficultyImage.color = Color.white;
+        difficultyImage = GetComponent<Image>();
+        difficultyImage.color = Color.red;
+
+        PlayerPrefs.SetInt("difficulty", difficultyLevel);
     }
 }

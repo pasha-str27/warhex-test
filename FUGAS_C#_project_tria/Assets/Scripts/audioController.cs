@@ -6,10 +6,10 @@ public class audioController : MonoBehaviour
 {
     public static GameObject lvlsound;
 
-    //creating DontDestroyOnLoad GameObject it is background music 
+    //creating Don'tDestroyOnLoad GameObject it is background music 
     void Awake()
     {
-        Time.timeScale = 1f;
+        movePoint.letMovePoint = true;
         if (lvlsound == null)
         {
             lvlsound = GameObject.Find("sound");
@@ -31,12 +31,15 @@ public class audioController : MonoBehaviour
     {
         int i = 100;
         float h = (lvlsound.GetComponent<AudioSource>().volume) / i;
+        var mainAudio = lvlsound.GetComponent<AudioSource>();
+        var currentAudio = GetComponent<AudioSource>();
+
         for (; i >= 0; --i)
         {
             yield return new WaitForSeconds(Time.deltaTime * 2);
-            lvlsound.GetComponent<AudioSource>().volume -= h;
+            mainAudio.volume -= h;
 
-            GetComponent<AudioSource>().volume += h;
+            currentAudio.volume += h;
         }
     }
 }

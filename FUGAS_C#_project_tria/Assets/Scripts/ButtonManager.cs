@@ -6,57 +6,63 @@ using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
-    public static bool ShowCreatorInfo = false;
-
+    public bool ShowCreatorInfo = false;
     public Animator transition;
     public float transitionTime = 1f;
 
-    public GameObject levelSubmenu;
-
     public GameObject clickOnButtonEffect;
-
-    public GameObject[] audioEffects;
-    public GameObject audioVolumeChnger;
-
+    public AudioSource[] audioEffects;
+    public GameObject audioVolumeChanger;
     public GameObject AngelinaSound;
-
-    static bool firstStart;
-
     static bool wasClickOnLogo;
-
     static float soundLevelOnMenu;
+    float _maxAudioLevel = 0.3f;
 
+    public static bool loadingFromMenu;
 
     private void Start()
     {
-        if (!firstStart)
-        {
-            audioController.lvlsound.GetComponent<AudioSource>().volume = 0.3f;
-            soundLevelOnMenu = audioController.lvlsound.GetComponent<AudioSource>().volume;
-            audioVolumeChnger.GetComponent<Slider>().value = soundLevelOnMenu;
-            for (int i = 0; i < audioEffects.Length; ++i)
-                audioEffects[i].GetComponent<AudioSource>().volume = audioVolumeChnger.GetComponent<Slider>().value;
-            audioController.lvlsound.GetComponent<AudioSource>().volume = audioVolumeChnger.GetComponent<Slider>().value;
+        if (!PlayerPrefs.HasKey("audioLevel"))
+            PlayerPrefs.SetFloat("audioLevel", _maxAudioLevel);
+        soundLevelOnMenu = PlayerPrefs.GetFloat("audioLevel");
 
-            firstStart = true;
+        if (audioVolumeChanger != null)
+        {
+            audioVolumeChanger.GetComponent<Slider>().value = soundLevelOnMenu;
+            audioController.lvlsound.GetComponent<AudioSource>().volume = soundLevelOnMenu;
         }
-        else
-            if (audioVolumeChnger != null)
-            audioVolumeChnger.GetComponent<Slider>().value = audioController.lvlsound.GetComponent<AudioSource>().volume;
+
+        for (int i = 0; i < audioEffects.Length; ++i)
+            audioEffects[i].volume = soundLevelOnMenu;
+    }
+
+    public void setLoadingFromMenu(bool value)
+    {
+        loadingFromMenu = value;
     }
 
     public void changeVolumeLevel()
     {
+        float newValue = audioVolumeChanger.GetComponent<Slider>().value;
         for (int i = 0; i < audioEffects.Length; ++i)
-            audioEffects[i].GetComponent<AudioSource>().volume = audioVolumeChnger.GetComponent<Slider>().value;
-        audioController.lvlsound.GetComponent<AudioSource>().volume = audioVolumeChnger.GetComponent<Slider>().value;
+            audioEffects[i].volume = newValue;
+        audioController.lvlsound.GetComponent<AudioSource>().volume = newValue;
+        PlayerPrefs.SetFloat("audioLevel", newValue);
     }
 
     public void Play()
     {
         EventSystem.current.SetSelectedGameObject(null);
-        StartCoroutine(LoadLevel("Game"));
+        if (PlayerPrefs.HasKey("currentLevel"))
+            StartCoroutine(LoadLevel("Game"));
+        else
+            Tutorial();
+    }
+
+    public void Tutorial()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        StartCoroutine(LoadLevel("Tutorial"));
     }
 
     public void ShowCreatorsInfo()
@@ -69,16 +75,21 @@ public class ButtonManager : MonoBehaviour
     private IEnumerator LoadLevel(string levelName)
     {
         transition.SetTrigger("Start");
-        if(levelName=="Game")
+        if(levelName=="Game"|| levelName=="Tutorial")
         {
-            soundLevelOnMenu = audioController.lvlsound.GetComponent<AudioSource>().volume;
-            int i = 50;
-            float h = (soundLevelOnMenu - 0.03f) / i;
-            for (; i >= 0; --i)
+            if(loadingFromMenu)
             {
-                yield return new WaitForSeconds(Time.deltaTime);
-                audioController.lvlsound.GetComponent<AudioSource>().volume -= h;
+                int i = 50;
+                float h = 2 * (soundLevelOnMenu / 3) / i;
+                var audio = audioController.lvlsound.GetComponent<AudioSource>();
+                for (; i >= 0; --i)
+                {
+                    yield return new WaitForSeconds(Time.deltaTime);
+                    audio.volume -= h;
+                }
             }
+            else
+                yield return new WaitForSeconds(transitionTime);
         }
 
         yield return new WaitForSeconds(transitionTime);
@@ -88,36 +99,37 @@ public class ButtonManager : MonoBehaviour
 
     public void MainMenu()
     {
-        GameIsPaused = false;
         Debug.Log("Game Unpaused");
-        Time.timeScale = 1f;
         StartCoroutine(LoadMenu());
         EventSystem.current.SetSelectedGameObject(null);
     }
 
     private IEnumerator LoadMenu()
     {
-        Time.timeScale = 1f;
+        movePoint.letMovePoint = false;
         transition.SetTrigger("Start");
-        if(!wasClickOnLogo)
+
+        var soundOnMenu = audioController.lvlsound.GetComponent<AudioSource>();
+        if (!wasClickOnLogo)
         {
             int i = 100;
-            float h = (soundLevelOnMenu - audioController.lvlsound.GetComponent<AudioSource>().volume) / i;
+            float h = (soundLevelOnMenu - soundOnMenu.volume) / i;
             for (; i > 0; --i)
             {
-                yield return new WaitForSeconds(Time.deltaTime*5);
-                audioController.lvlsound.GetComponent<AudioSource>().volume += h;
+                yield return new WaitForSeconds(Time.deltaTime);
+                soundOnMenu.volume += h;
             }
         }
         else
         {
             int i = 100;
-            float h = AngelinaSound.GetComponent<AudioSource>().volume / i;
+            var angelinaSound = AngelinaSound.GetComponent<AudioSource>();
+            float h = angelinaSound.volume / i;
             for (; i >= 0; --i)
             {
-                yield return new WaitForSeconds(Time.deltaTime*3);
-                audioController.lvlsound.GetComponent<AudioSource>().volume += h;
-                AngelinaSound.GetComponent<AudioSource>().volume -= h;
+                yield return new WaitForSeconds(Time.deltaTime);
+                soundOnMenu.volume += h;
+                angelinaSound.volume -= h;
             }
         }
             
@@ -127,53 +139,49 @@ public class ButtonManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        GameIsPaused = false;
         movePoint.EnemyNumber = 0;
         Debug.Log("Reloading level");
-        Time.timeScale = 1f;
+        movePoint.letMovePoint = true;
         Assets.Scripts.triangulation.triangulation.loadingFromLevelsMenu = true;
 
-        Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.name);
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(scene);
         EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void nextLevel()
     {
-        GameIsPaused = false;
         movePoint.EnemyNumber = 0;
         Debug.Log("Reloading level");
-        Time.timeScale = 1f;
+        EventSystem.current.SetSelectedGameObject(null);
 
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void loadLevel(int level)
     {
         movePoint.EnemyNumber = 0;
         Debug.Log("Reloading level");
-        Time.timeScale = 1f;
+        movePoint.letMovePoint = true;
         Assets.Scripts.triangulation.triangulation.level = level;
         Assets.Scripts.triangulation.triangulation.loadingFromLevelsMenu = true;
-        StartCoroutine(LoadLevel("Game"));
         EventSystem.current.SetSelectedGameObject(null);
+        StartCoroutine(LoadLevel("Game"));
     }
 
     public void Pause()
     {
-        if (GameIsPaused)
+        EventSystem.current.SetSelectedGameObject(null);
+        if (!movePoint.letMovePoint)
         {
             Debug.Log("Game Unpaused");
-            GameIsPaused = false;
-            Time.timeScale = 1f;
+            movePoint.letMovePoint = true;
         }
         else
         {
             Debug.Log("Game Paused");
-            GameIsPaused = true;
-            Time.timeScale = 0f;
+            movePoint.letMovePoint = false;
         }
     }
 

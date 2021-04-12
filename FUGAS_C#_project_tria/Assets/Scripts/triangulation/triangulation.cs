@@ -46,15 +46,12 @@ namespace Assets.Scripts.triangulation
         //Load list of points from file
         void loadPoints()
         {
-            StreamReader fileWithLevels = new StreamReader(Application.dataPath+"/levels.txt");
-            string pointsString ="";
-            for (int i = 0; i < level; ++i)
-                pointsString = fileWithLevels.ReadLine();
-            points.Clear();
-            for(int i = 0; i < pointsString.Split(' ').Length - 1; i += 2)
-                points.Add(new Vector2(float.Parse(pointsString.Split(' ')[i]), float.Parse(pointsString.Split(' ')[i + 1])));
+            var fileWithLevels = Resources.Load<TextAsset>("levels");
+            string[] currentLevelText = fileWithLevels.text.Split('\n')[level-1].Split(' ');
 
-            fileWithLevels.Close();
+            points.Clear();
+            for (int i = 0; i < currentLevelText.Length-1; i += 2)
+                points.Add(new Vector2(float.Parse(currentLevelText[i]), float.Parse(currentLevelText[i + 1])));
         }
 
         public List<Triangle> GetTriangles()
